@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "StudyBuddy",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "editor.tabSize": 2,
+    "editor.formatOnSave": true
+  }
+}

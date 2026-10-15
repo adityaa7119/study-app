@@ -1,0 +1,149 @@
+/* app/globals.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --border: #e2e8f0;
+  }
+
+  .dark {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border: #334155;
+  }
+
+  .dark.amoled {
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-card: #111111;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --border: #1a1a1a;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(99, 102, 241, 0.3);
+    color: inherit;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-slate-200 bg-white shadow-sm 
+           dark:border-slate-700 dark:bg-slate-800
+           transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply card hover:shadow-md hover:-translate-y-0.5 cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 
+           text-sm font-semibold text-white shadow-sm
+           hover:bg-indigo-600 active:scale-95
+           transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 rounded-xl border border-slate-200 
+           bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm
+           hover:bg-slate-50 active:scale-95
+           dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700
+           transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-danger {
+    @apply inline-flex items-center gap-2 rounded-xl bg-red-500 px-4 py-2.5 
+           text-sm font-semibold text-white shadow-sm
+           hover:bg-red-600 active:scale-95
+           transition-all duration-150;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+           placeholder:text-slate-400 outline-none
+           focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20
+           dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500
+           transition-all duration-150;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium
+           text-slate-600 dark:text-slate-400
+           hover:bg-slate-100 dark:hover:bg-slate-800
+           transition-all duration-150;
+  }
+
+  .nav-link.active {
+    @apply bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700;
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500 ease-out;
+  }
+
+  /* Focus mode overlay */
+  .focus-overlay {
+    @apply fixed inset-0 z-50 flex flex-col items-center justify-center
+           bg-slate-950 text-white;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300 dark:bg-slate-600;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400 dark:bg-slate-500;
+  }
+}
