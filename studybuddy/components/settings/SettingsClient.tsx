@@ -19,6 +19,7 @@ import {
   Users,
   Sliders,
   Sparkles,
+  Camera,
 } from "lucide-react";
 import type { Profile, Transaction } from "@/lib/types/database";
 import { useAppStore, type Theme } from "@/lib/store/useAppStore";
@@ -26,6 +27,8 @@ import { createClient } from "@/lib/supabase/client";
 import { toast } from "@/components/ui/Toaster";
 import { cn } from "@/lib/utils";
 import CommunitySupport from "./CommunitySupport";
+import AvatarPickerModal from "./AvatarPickerModal";
+import { getAvatarUrl, PRESET_AVATARS } from "@/lib/constants/avatars";
 
 interface Props {
   profile: Profile;
@@ -94,6 +97,7 @@ export default function SettingsClient({ profile: initial, transactions }: Props
     avatar_seed: initial.avatar_seed,
   });
   const [saving, setSaving] = useState(false);
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
 
   const supabase = createClient();
 
@@ -226,23 +230,74 @@ export default function SettingsClient({ profile: initial, transactions }: Props
               Student Profile
             </h2>
 
-            {/* Avatar */}
-            <div className="mb-5 flex items-center gap-4">
-              <img
-                src={`https://api.dicebear.com/7.x/initials/svg?seed=${form.avatar_seed}&backgroundColor=D97D29&textColor=fff`}
-                alt="avatar"
-                className="h-16 w-16 rounded-2xl"
-              />
-              <div className="flex-1">
-                <label className="mb-1 block text-xs font-medium text-slate-500">
-                  Avatar seed (any text)
-                </label>
-                <input
-                  className="input"
-                  value={form.avatar_seed}
-                  onChange={(e) => setForm({ ...form, avatar_seed: e.target.value })}
-                  placeholder="your name, emoji, etc."
+            {/* Avatar Profile Picture Selector */}
+            <div className="mb-6 p-4 rounded-2xl bg-white/5 border border-white/10 flex flex-col sm:flex-row items-center gap-4">
+              <div className="relative group shrink-0">
+                <img
+                  src={getAvatarUrl(form.avatar_seed, form.full_name)}
+                  alt="avatar"
+                  className="h-20 w-20 rounded-full object-cover border-2 border-[#E3A354] shadow-lg shadow-[#D97D29]/20 bg-black/40"
                 />
+                <button
+                  type="button"
+                  onClick={() => setIsAvatarModalOpen(true)}
+                  className="absolute inset-0 rounded-full bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center text-[10px] text-white font-medium transition"
+                  title="Change Profile Picture"
+                >
+                  <Camera className="h-4 w-4 mb-0.5" />
+                  Change
+                </button>
+              </div>
+
+              <div className="flex-1 text-center sm:text-left">
+                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                  <span className="text-sm font-bold text-white">Profile Picture</span>
+                  <span className="rounded-full bg-[#D97D29]/20 border border-[#D97D29]/30 px-2 py-0.5 text-[10px] font-bold text-[#E3A354]">
+                    16 Avatars + Custom Photo
+                  </span>
+                </div>
+                <p className="text-xs text-[#E8D6C4]/80 mb-3">
+                  Select from 16 illustrated student avatars or upload your own photo.
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsAvatarModalOpen(true)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#D97D29] hover:bg-[#b8631b] text-white text-xs font-semibold shadow-md shadow-[#D97D29]/25 transition"
+                  >
+                    <Camera className="h-3.5 w-3.5" />
+                    <span>Choose Picture / Upload</span>
+                  </button>
+
+                  {/* Quick row of 4 popular presets */}
+                  <div className="hidden sm:flex items-center gap-1.5 ml-1 pl-2 border-l border-white/15">
+                    {PRESET_AVATARS.slice(0, 4).map((av) => (
+                      <button
+                        key={av.id}
+                        type="button"
+                        onClick={() => {
+                          setForm({ ...form, avatar_seed: av.url });
+                          toast.success(`Selected "${av.name}" avatar!`);
+                        }}
+                        className={cn(
+                          "h-8 w-8 rounded-full overflow-hidden border-2 transition hover:scale-110",
+                          form.avatar_seed === av.url ? "border-[#E3A354] ring-2 ring-[#E3A354]/40" : "border-white/20"
+                        )}
+                        title={av.name}
+                      >
+                        <img src={av.url} alt={av.name} className="h-full w-full object-cover" />
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => setIsAvatarModalOpen(true)}
+                      className="text-[11px] font-semibold text-[#E3A354] hover:underline px-1"
+                    >
+                      +12 more
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -457,6 +512,15 @@ export default function SettingsClient({ profile: initial, transactions }: Props
           </div>
         </section>
       )}
+
+      {/* Avatar Picker Modal */}
+      <AvatarPickerModal
+        isOpen={isAvatarModalOpen}
+        onClose={() => setIsAvatarModalOpen(false)}
+        currentAvatar={form.avatar_seed}
+        onSelect={(newAvatar) => setForm({ ...form, avatar_seed: newAvatar })}
+        studentName={form.full_name}
+      />
     </div>
   );
 }

@@ -1,6 +1,6 @@
-// components/layout/Sidebar.tsx
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -16,14 +16,24 @@ import {
   LogOut,
   Coins,
   Users,
+  Film,
+  Rocket,
+  Activity,
+  Briefcase,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/lib/store/useAppStore";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { getAvatarUrl } from "@/lib/constants/avatars";
+import AvatarPickerModal from "@/components/settings/AvatarPickerModal";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/shorts", label: "Study Shorts", icon: Film, badge: "New" },
+  { href: "/projects", label: "Project Lab", icon: Rocket, badge: "AI" },
+  { href: "/simulator", label: "Concept Simulator", icon: Activity, badge: "Code" },
+  { href: "/placement", label: "Placement Hub", icon: Briefcase, badge: "Jobs" },
   { href: "/planner", label: "Planner", icon: Calendar },
   { href: "/quiz", label: "Quiz Arena", icon: Trophy },
   { href: "/library", label: "Library", icon: Library },
@@ -39,6 +49,8 @@ export default function Sidebar({ onClose }: SidebarProps) {
   const pathname = usePathname();
   const { profile, openBot } = useAppStore();
   const router = useRouter();
+
+  const [isAvatarPickerOpen, setIsAvatarPickerOpen] = useState(false);
 
   const handleSignOut = async () => {
     const supabase = createClient();
@@ -86,6 +98,11 @@ export default function Sidebar({ onClose }: SidebarProps) {
               >
                 <item.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-[#D97D29] dark:text-[#E3A354]" : "text-[var(--text-secondary)]")} />
                 <span>{item.label}</span>
+                {"badge" in item && (
+                  <span className="ml-1.5 rounded-full bg-gradient-to-r from-[#D97D29]/30 to-[#E3A354]/30 border border-[#E3A354]/40 px-1.5 py-0.5 text-[9px] font-bold text-[#E3A354]">
+                    {item.badge}
+                  </span>
+                )}
                 {isActive && (
                   <motion.div
                     layoutId="activeNav"
@@ -116,14 +133,23 @@ export default function Sidebar({ onClose }: SidebarProps) {
       {/* User profile footer */}
       <div className="border-t border-white/10 p-3">
         {profile && (
-          <div className="mb-2 flex items-center gap-3 rounded-2xl p-2.5 bg-white/10 border border-white/15 backdrop-blur-xl">
-            <img
-              src={`https://api.dicebear.com/7.x/initials/svg?seed=${profile.avatar_seed}&backgroundColor=D97D29&textColor=fff`}
-              alt="avatar"
-              className="h-8 w-8 rounded-full border border-white/30"
-            />
+          <div
+            onClick={() => setIsAvatarPickerOpen(true)}
+            className="mb-2 flex items-center gap-3 rounded-2xl p-2.5 bg-white/10 border border-white/15 backdrop-blur-xl hover:bg-white/20 transition cursor-pointer group"
+            title="Click to choose or upload profile picture"
+          >
+            <div className="relative shrink-0">
+              <img
+                src={getAvatarUrl(profile.avatar_seed, profile.full_name)}
+                alt="avatar"
+                className="h-8 w-8 rounded-full object-cover border border-[#E3A354] group-hover:scale-105 transition"
+              />
+              <span className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full bg-[#E3A354] border border-[#2B1810] flex items-center justify-center text-[7px] text-black font-bold">
+                ✎
+              </span>
+            </div>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-xs font-semibold text-white">
+              <div className="truncate text-xs font-semibold text-white group-hover:text-[#E3A354] transition">
                 {profile.full_name}
               </div>
               <div className="truncate text-[11px] text-[#E8D6C4]/80">
@@ -140,6 +166,20 @@ export default function Sidebar({ onClose }: SidebarProps) {
           Sign Out
         </button>
       </div>
+
+      {/* Avatar Picker Modal */}
+      {profile && (
+        <AvatarPickerModal
+          isOpen={isAvatarPickerOpen}
+          onClose={() => setIsAvatarPickerOpen(false)}
+          currentAvatar={profile.avatar_seed}
+          onSelect={(newAvatar) => {
+            const { setProfile } = useAppStore.getState();
+            setProfile({ ...profile, avatar_seed: newAvatar });
+          }}
+          studentName={profile.full_name}
+        />
+      )}
     </aside>
   );
 }

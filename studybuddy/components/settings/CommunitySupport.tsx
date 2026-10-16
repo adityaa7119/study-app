@@ -28,6 +28,7 @@ import {
 import { useAppStore } from "@/lib/store/useAppStore";
 import { toast } from "@/components/ui/Toaster";
 import { cn } from "@/lib/utils";
+import { getAvatarUrl } from "@/lib/constants/avatars";
 
 interface DoubtPost {
   id: string;
@@ -56,7 +57,7 @@ const INITIAL_DOUBTS: DoubtPost[] = [
   {
     id: "d1",
     author: "Aarav Sharma",
-    avatarSeed: "aarav-eng",
+    avatarSeed: "/avatars/avatar-2.png",
     exam: "First Year (FE)",
     subject: "Engineering Mathematics",
     title: "Tips for Linear Differential Equations & Laplace Transforms?",
@@ -70,7 +71,7 @@ const INITIAL_DOUBTS: DoubtPost[] = [
       {
         id: "r1",
         author: "Priya Nair",
-        avatarSeed: "priya-mentor",
+        avatarSeed: "/avatars/avatar-3.png",
         content:
           "For f(x) = e^(ax) * V, use the shifting property D -> D + a! Also practice B.S. Grewal Chapter 13 solved examples.",
         timeAgo: "1 hour ago",
@@ -81,7 +82,7 @@ const INITIAL_DOUBTS: DoubtPost[] = [
   {
     id: "d2",
     author: "Sneha Patel",
-    avatarSeed: "sneha-eng",
+    avatarSeed: "/avatars/avatar-5.png",
     exam: "Second Year (SE)",
     subject: "Data Structures",
     title: "AVL Tree Rotations: Intuitive trick to remember LL vs LR?",
@@ -95,7 +96,7 @@ const INITIAL_DOUBTS: DoubtPost[] = [
       {
         id: "r2",
         author: "Rohan Gupta",
-        avatarSeed: "rohan-senior",
+        avatarSeed: "/avatars/avatar-6.png",
         content:
           "Remember: An LR rotation is simply a Left rotation on the left child followed by a Right rotation on the root!",
         timeAgo: "3 hours ago",
@@ -106,7 +107,7 @@ const INITIAL_DOUBTS: DoubtPost[] = [
   {
     id: "d3",
     author: "Vikram Sengupta",
-    avatarSeed: "vikram-eng",
+    avatarSeed: "/avatars/avatar-9.png",
     exam: "Third Year (TE)",
     subject: "Operating Systems",
     title: "Banker's Algorithm Safety State verification shortcut",
@@ -521,9 +522,9 @@ export default function CommunitySupport() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-3 flex-1 min-w-0">
                       <img
-                        src={`https://api.dicebear.com/7.x/initials/svg?seed=${doubt.avatarSeed}&backgroundColor=D97D29&textColor=fff`}
+                        src={getAvatarUrl(doubt.avatarSeed, doubt.author)}
                         alt={doubt.author}
-                        className="h-8 w-8 shrink-0 rounded-full border border-[#D97D29]/30"
+                        className="h-8 w-8 shrink-0 rounded-full object-cover border border-[#D97D29]/30"
                       />
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">

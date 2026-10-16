@@ -9,7 +9,6 @@ import {
   CalendarDays,
   CheckSquare,
   Megaphone,
-  Presentation,
   BarChart3,
   BookMarked,
   Timer,
@@ -36,6 +35,9 @@ import {
   Quote,
   Sun,
   Sliders,
+  Rocket,
+  Activity,
+  Briefcase,
 } from "lucide-react";
 import {
   BarChart,
@@ -232,14 +234,6 @@ export default function DashboardClient({
       description: "University notifications, semester timetables, and academic circulars",
     },
     {
-      id: "bulletin",
-      label: "Bulletin Board",
-      icon: Presentation,
-      type: "route",
-      target: "/settings",
-      description: "Community discussion board, peer Q&A, and study circles",
-    },
-    {
       id: "assessment",
       label: "Student Assessment",
       icon: BarChart3,
@@ -263,11 +257,13 @@ export default function DashboardClient({
       description: "Launch Focus Shield with Pomodoro timer & ambient sounds",
     },
     {
-      id: "admissions",
-      label: "CGPA & Honours Target",
-      icon: Compass,
-      type: "modal",
-      description: "Estimate semester SGPA/CGPA targets, honours eligibility, and placement cutoffs",
+      id: "simulator",
+      label: "Concept Simulator",
+      icon: Activity,
+      type: "route",
+      target: "/simulator",
+      badge: "Code",
+      description: "Interactive physics & math simulations with real-time Python/MATLAB code",
     },
     {
       id: "document",
@@ -302,19 +298,21 @@ export default function DashboardClient({
     },
     {
       id: "placement",
-      label: "Cutoff Analysis",
-      icon: Award,
-      type: "modal",
-      description: "Category-wise closing ranks, percentile calculators, and statistics",
+      label: "Placement Hub",
+      icon: Briefcase,
+      type: "route",
+      target: "/placement",
+      badge: "Jobs",
+      description: "Company cutoffs, hiring rounds, ATS resume scanner, and OA questions",
     },
     {
       id: "project",
-      label: "Quiz Duels",
-      icon: Trophy,
+      label: "Project Lab",
+      icon: Rocket,
       type: "route",
-      target: "/quiz",
-      badge: "Wager 50",
-      description: "Challenge peer aspirants in real-time speed quiz duels",
+      target: "/projects",
+      badge: "AI",
+      description: "Mini project suggestions, step-by-step build plans, and starter code",
     },
     {
       id: "exam",
@@ -530,32 +528,29 @@ export default function DashboardClient({
         >
           <div className="mb-6 flex items-center justify-between px-2">
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-white tracking-tight font-poppins flex items-center gap-2">
-                <span>Academic & Campus Services</span>
-                <span className="apple-badge px-2 py-0.5 text-[9px] rounded-full">
-                  Apple Glass
-                </span>
+              <h2 className="text-base sm:text-lg font-bold text-white tracking-tight font-poppins">
+                Academic & Campus Services
               </h2>
               <p className="text-xs text-[#E8D6C4]/80 mt-0.5">
-                Frosted glass launchers with smooth specular sheen and haptic lift.
+                Quick launchers for campus tools, course portals, and academic resources.
               </p>
             </div>
             <span className="rounded-full bg-white/10 border border-white/20 px-2.5 py-0.5 text-[11px] font-bold text-[#E8D6C4] backdrop-blur-md">
-              18 Apps
+              {HUB_MODULES.length} Apps
             </span>
           </div>
 
           {/* THE 3-COLUMN APPLE SQUIRCLE GRID */}
-          <div className="grid grid-cols-3 gap-y-6 sm:gap-y-8 gap-x-2 sm:gap-x-4">
+          <div className="grid grid-cols-3 gap-y-5 sm:gap-y-8 gap-x-1.5 sm:gap-x-4">
             {HUB_MODULES.map((mod) => (
               <motion.button
                 key={mod.id}
                 whileTap={{ scale: 0.93 }}
                 onClick={() => handleModuleClick(mod)}
-                className="group relative flex flex-col items-center text-center p-2.5 sm:p-3.5 rounded-3xl transition-all duration-300 hover:bg-white/[0.08]"
+                className="group relative flex flex-col items-center text-center p-2 sm:p-3.5 rounded-2xl sm:rounded-3xl transition-all duration-300 hover:bg-white/[0.08]"
               >
                 {/* Apple Squircle Glass Icon Container */}
-                <div className="relative mb-2.5">
+                <div className="relative mb-2">
                   {/* Apple Notification Badge (Photo 2 style) */}
                   {mod.badge && (
                     <span className="apple-badge absolute -top-1.5 -right-2 z-20 rounded-full px-1.5 py-0.2 text-[9px]">
@@ -564,13 +559,13 @@ export default function DashboardClient({
                   )}
 
                   {/* Glassy Squircle Icon with specular sheen */}
-                  <div className="apple-glass-icon flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center text-white">
-                    <mod.icon className="h-7 w-7 sm:h-8 sm:w-8 stroke-[1.75] text-[#E3A354] group-hover:text-white transition-colors duration-200" />
+                  <div className="apple-glass-icon flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center text-white">
+                    <mod.icon className="h-6 w-6 sm:h-8 sm:w-8 stroke-[1.75] text-[#E3A354] group-hover:text-white transition-colors duration-200" />
                   </div>
                 </div>
 
                 {/* Centered label matching Photo 1 & 2 style */}
-                <span className="text-xs sm:text-[13px] font-semibold text-[#FDF5EC] leading-tight group-hover:text-[#D97D29] transition-colors">
+                <span className="text-[11px] sm:text-[13px] font-semibold text-[#FDF5EC] leading-tight group-hover:text-[#D97D29] transition-colors line-clamp-2">
                   {mod.label}
                 </span>
               </motion.button>
@@ -579,7 +574,7 @@ export default function DashboardClient({
 
           {/* Floating Apple Dock at bottom of Hub (Photo 2 match) */}
           <div className="mt-8 pt-6 border-t border-white/10 flex justify-center">
-            <div className="apple-dock px-3 sm:px-5 py-2.5 flex items-center gap-3 sm:gap-4">
+            <div className="apple-dock px-3 sm:px-5 py-2 sm:py-2.5 flex items-center justify-around gap-2 sm:gap-4 max-w-full overflow-x-auto no-scrollbar">
               {[
                 { label: "Focus Shield", icon: Timer, action: () => startFocus("General Study", 25), badge: "Live" },
                 { label: "StudyBot AI", icon: Bot, action: openBot, badge: "2" },

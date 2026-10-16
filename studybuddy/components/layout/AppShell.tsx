@@ -11,6 +11,8 @@ import MobileNav from "@/components/layout/MobileNav";
 import StudyBot from "@/components/ai/StudyBot";
 import FocusOverlay from "@/components/focus/FocusOverlay";
 import type { Profile } from "@/lib/types/database";
+import { getAvatarUrl } from "@/lib/constants/avatars";
+import AvatarPickerModal from "@/components/settings/AvatarPickerModal";
 
 interface AppShellProps {
   profile: Profile;
@@ -20,6 +22,7 @@ interface AppShellProps {
 export default function AppShell({ profile, children }: AppShellProps) {
   const { setProfile, isBotOpen, isFocusActive } = useAppStore();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isAvatarPickerOpen, setIsAvatarPickerOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -32,6 +35,10 @@ export default function AppShell({ profile, children }: AppShellProps) {
   }, [pathname]);
 
   const getPageTitle = () => {
+    if (pathname.includes("/shorts")) return "Study Shorts";
+    if (pathname.includes("/projects")) return "Project Lab";
+    if (pathname.includes("/simulator")) return "Concept Simulator";
+    if (pathname.includes("/placement")) return "Placement Hub";
     if (pathname.includes("/planner")) return "Planner";
     if (pathname.includes("/quiz")) return "Quiz Arena";
     if (pathname.includes("/library")) return "Library";
@@ -69,22 +76,28 @@ export default function AppShell({ profile, children }: AppShellProps) {
               <Coins className="h-3.5 w-3.5 text-[#D97D29]" />
               <span>{profile.credit_points}</span>
             </div>
-            <img
-              src={`https://api.dicebear.com/7.x/initials/svg?seed=${profile.avatar_seed}&backgroundColor=D97D29&textColor=fff`}
-              alt="avatar"
-              className="h-7 w-7 rounded-full border border-[#D97D29]"
-            />
+            <button
+              onClick={() => setIsAvatarPickerOpen(true)}
+              className="relative group cursor-pointer"
+              title="Change Profile Picture"
+            >
+              <img
+                src={getAvatarUrl(profile.avatar_seed, profile.full_name)}
+                alt="avatar"
+                className="h-7 w-7 rounded-full object-cover border border-[#D97D29] group-hover:scale-105 transition"
+              />
+            </button>
           </div>
         </header>
 
-        {/* Scrollable content body */}
+        {/* Scrollable content body with mobile bottom padding */}
         <main className="flex-1 overflow-y-auto bg-black/20 dark:bg-black/35 backdrop-blur-[2px]">
-          <div className="min-h-full p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">{children}</div>
+          <div className="min-h-full p-3 sm:p-6 lg:p-8 max-w-7xl mx-auto pb-24 lg:pb-8">{children}</div>
         </main>
 
         {/* Mobile bottom navigation bar */}
         <div className="lg:hidden">
-          <MobileNav />
+          <MobileNav onOpenMenu={() => setIsDrawerOpen(true)} />
         </div>
       </div>
 
@@ -123,6 +136,20 @@ export default function AppShell({ profile, children }: AppShellProps) {
 
       {/* Focus overlay (full-screen) */}
       {isFocusActive && <FocusOverlay />}
+
+      {/* Avatar Picker Modal */}
+      {profile && (
+        <AvatarPickerModal
+          isOpen={isAvatarPickerOpen}
+          onClose={() => setIsAvatarPickerOpen(false)}
+          currentAvatar={profile.avatar_seed}
+          onSelect={(newAvatar) => {
+            const { setProfile } = useAppStore.getState();
+            setProfile({ ...profile, avatar_seed: newAvatar });
+          }}
+          studentName={profile.full_name}
+        />
+      )}
     </div>
   );
 }
