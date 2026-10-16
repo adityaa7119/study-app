@@ -1,5 +1,5 @@
 /* app/globals.css */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,30 +7,44 @@
 
 @layer base {
   :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --bg-card: #ffffff;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --border: #e2e8f0;
+    /* Study Haven Golden Hour Palette (inspired by the study photo) */
+    --bg-primary: #FDF8F2; /* Warm linen cream */
+    --bg-secondary: #F6ECE0; /* Soft warm parchment / latte */
+    --bg-card: #FFFFFF;
+    --text-primary: #2C1810; /* Deep espresso roast */
+    --text-secondary: #7C5C48; /* Warm cocoa / cedar */
+    --border: #E8D6C4; /* Soft warm paper tone */
+    --accent: #D97D29; /* Warm golden amber sunlight */
+    --accent-hover: #BE6017; /* Rich terracotta honey */
+    --accent-light: #FDF4E7; /* Soft sunlit cream */
+    --accent-muted: #F3DCBF; /* Warm honey parchment */
+    color-scheme: light dark;
   }
 
   .dark {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-card: #1e293b;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --border: #334155;
+    --bg-primary: #1C120C; /* Deep warm roasted timber */
+    --bg-secondary: #140C07; /* Dark espresso desk shadow */
+    --bg-card: #281B13; /* Warm cedar / roasted coffee card */
+    --text-primary: #FDF5EC; /* Cream paper white */
+    --text-secondary: #D7BEA8; /* Warm parchment */
+    --border: #442D1F; /* Warm dark wood grain */
+    --accent: #E3A354; /* Radiant golden amber */
+    --accent-hover: #F0B469; /* Warm sunlit glow */
+    --accent-light: #3D2618;
+    --accent-muted: #2E1B10;
   }
 
   .dark.amoled {
     --bg-primary: #000000;
-    --bg-secondary: #0a0a0a;
-    --bg-card: #111111;
-    --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
-    --border: #1a1a1a;
+    --bg-secondary: #0D0805;
+    --bg-card: #170E08;
+    --text-primary: #FDF5EC;
+    --text-secondary: #D7BEA8;
+    --border: #2E1C12;
+    --accent: #E3A354;
+    --accent-hover: #F0B469;
+    --accent-light: #1F120A;
+    --accent-muted: #0F0905;
   }
 
   * {
@@ -44,25 +58,24 @@
   }
 
   body {
-    font-family: "Inter", system-ui, sans-serif;
+    font-family: "Poppins", system-ui, sans-serif;
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color 0.25s ease, color 0.25s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
-    background: rgba(99, 102, 241, 0.3);
+    background: rgba(217, 125, 41, 0.35);
     color: inherit;
   }
 }
 
 @layer components {
   .card {
-    @apply rounded-2xl border border-slate-200 bg-white shadow-sm 
-           dark:border-slate-700 dark:bg-slate-800
-           transition-all duration-200;
+    @apply rounded-3xl border border-white/20 bg-white/10 dark:bg-black/35 backdrop-blur-2xl shadow-xl 
+           transition-all duration-200 text-[var(--text-primary)];
   }
 
   .card-hover {
@@ -70,17 +83,16 @@
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 
+    @apply inline-flex items-center gap-2 rounded-xl bg-[#D97D29] px-4 py-2.5 
            text-sm font-semibold text-white shadow-sm
-           hover:bg-indigo-600 active:scale-95
+           hover:bg-[#BE6017] active:scale-95
            transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 rounded-xl border border-slate-200 
-           bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm
-           hover:bg-slate-50 active:scale-95
-           dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700
+    @apply inline-flex items-center gap-2 rounded-xl border border-[var(--border)] 
+           bg-[var(--bg-card)] px-4 py-2.5 text-sm font-semibold text-[var(--text-primary)] shadow-sm
+           hover:bg-[var(--bg-secondary)] active:scale-95
            transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none;
   }
 
@@ -92,11 +104,15 @@
   }
 
   .input {
-    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
-           placeholder:text-slate-400 outline-none
-           focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20
-           dark:border-slate-600 dark:bg-slate-800 dark:text-white dark:placeholder:text-slate-500
+    @apply w-full rounded-xl border border-[var(--border)] bg-[var(--bg-card)] px-4 py-2.5 text-sm
+           outline-none text-[var(--text-primary)]
+           focus:border-[#D97D29] focus:ring-2 focus:ring-[#D97D29]/25
            transition-all duration-150;
+  }
+
+  .input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.6;
   }
 
   .badge {
@@ -105,28 +121,214 @@
 
   .nav-link {
     @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium
-           text-slate-600 dark:text-slate-400
-           hover:bg-slate-100 dark:hover:bg-slate-800
+           text-[var(--text-secondary)]
+           hover:bg-[#D97D29]/10 hover:text-[var(--text-primary)]
            transition-all duration-150;
   }
 
   .nav-link.active {
-    @apply bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400;
+    @apply bg-[#D97D29]/15 text-[#D97D29] font-semibold dark:text-[#E3A354];
+  }
+
+  /* 3-Column Hub Grid Tile (Design Reference Photo) */
+  .hub-tile {
+    @apply flex flex-col items-center justify-center text-center p-4 sm:p-5 rounded-2xl
+           transition-all duration-200 cursor-pointer select-none
+           border border-transparent hover:border-[#D97D29]/40 hover:bg-[#D97D29]/10
+           active:scale-95;
+  }
+
+  .hub-tile-icon {
+    @apply mb-2.5 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl
+           text-[#D97D29] transition-transform duration-200 group-hover:scale-110;
+  }
+
+  .hub-tile-label {
+    @apply text-xs sm:text-sm font-medium text-[var(--text-primary)] leading-snug line-clamp-2;
   }
 
   /* Progress bar */
   .progress-bar {
-    @apply h-2 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700;
+    @apply h-2 w-full overflow-hidden rounded-full bg-[var(--border)];
   }
 
   .progress-fill {
-    @apply h-full rounded-full transition-all duration-500 ease-out;
+    @apply h-full rounded-full transition-all duration-500 ease-out bg-gradient-to-r from-[#D97D29] to-[#E3A354];
   }
 
   /* Focus mode overlay */
   .focus-overlay {
     @apply fixed inset-0 z-50 flex flex-col items-center justify-center
-           bg-slate-950 text-white;
+           bg-[#1C120C] text-[#FDF5EC];
+  }
+
+  /* Golden Hour Study Desk Wallpaper Theme */
+  .forest-wallpaper-bg,
+  .study-wallpaper-bg {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(28, 18, 12, 0.38) 0%,
+        rgba(20, 12, 7, 0.48) 50%,
+        rgba(14, 8, 5, 0.72) 100%
+      ),
+      url("/study-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  .forest-wallpaper-clean,
+  .study-wallpaper-clean {
+    background-image: linear-gradient(
+        to bottom,
+        rgba(28, 18, 12, 0.22) 0%,
+        rgba(20, 12, 7, 0.52) 100%
+      ),
+      url("/study-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  /* Apple Frosted Glass Morphism System (Sunlight Amber Tint) */
+  .apple-glass {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(28px) saturate(190%);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+                0 12px 32px -4px rgba(28, 18, 12, 0.35),
+                0 2px 6px rgba(28, 18, 12, 0.15);
+  }
+
+  .apple-glass-card {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(36px) saturate(200%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    box-shadow: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.4),
+                0 24px 60px -12px rgba(28, 18, 12, 0.55);
+    border-radius: 28px;
+  }
+
+  .dark .apple-glass-card {
+    background: rgba(28, 18, 12, 0.42);
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    border: 1px solid rgba(255, 240, 225, 0.18);
+    box-shadow: inset 0 1px 1.5px 0 rgba(255, 240, 225, 0.25),
+                0 24px 60px -12px rgba(0, 0, 0, 0.65);
+  }
+
+  /* Apple Glass Icon with Squircle Radius & Golden Specular Sheen Animation */
+  .apple-glass-icon {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.30) 0%,
+      rgba(255, 255, 255, 0.12) 45%,
+      rgba(255, 248, 235, 0.05) 100%
+    );
+    backdrop-filter: blur(28px) saturate(210%);
+    -webkit-backdrop-filter: blur(28px) saturate(210%);
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    box-shadow: inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.6),
+                0 10px 24px -4px rgba(28, 18, 12, 0.35),
+                0 2px 6px rgba(28, 18, 12, 0.12);
+    transition: all 0.34s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .dark .apple-glass-icon {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.24) 0%,
+      rgba(255, 255, 255, 0.10) 50%,
+      rgba(43, 24, 16, 0.25) 100%
+    );
+    border: 1px solid rgba(255, 240, 225, 0.28);
+    box-shadow: inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.5),
+                0 10px 28px -4px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Top glass glare curve */
+  .apple-glass-icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 48%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 22px 22px 0 0;
+    pointer-events: none;
+  }
+
+  /* Animated sweep sheen */
+  .apple-glass-icon::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      60deg,
+      transparent 36%,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 64%
+    );
+    transform: rotate(25deg) translateY(-120%);
+    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+
+  .group:hover .apple-glass-icon::after,
+  .apple-glass-icon:hover::after {
+    transform: rotate(25deg) translateY(120%);
+  }
+
+  .group:hover .apple-glass-icon,
+  .apple-glass-icon:hover {
+    transform: translateY(-6px) scale(1.08);
+    border-color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.42) 0%,
+      rgba(255, 255, 255, 0.20) 50%,
+      rgba(217, 125, 41, 0.25) 100%
+    );
+    box-shadow: inset 0 2px 3px 0 rgba(255, 255, 255, 0.85),
+                0 18px 40px -4px rgba(217, 125, 41, 0.45),
+                0 0 28px rgba(246, 222, 187, 0.35);
+  }
+
+  /* Apple Homescreen Notification Pill Badge */
+  .apple-badge {
+    background: rgba(255, 255, 255, 0.96);
+    color: #2C1810;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0.5px #fff;
+    font-weight: 800;
+  }
+
+  /* Apple Floating Bottom Dock */
+  .apple-dock {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(40px) saturate(220%);
+    -webkit-backdrop-filter: blur(40px) saturate(220%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.5),
+                0 24px 60px -10px rgba(28, 18, 12, 0.65);
+    border-radius: 28px;
+  }
+
+  .dark .apple-dock {
+    background: rgba(28, 18, 12, 0.45);
+    border: 1px solid rgba(255, 240, 225, 0.18);
   }
 
   /* Scrollbar */
@@ -140,10 +342,11 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-slate-300 dark:bg-slate-600;
+    @apply rounded-full bg-[#D97D29]/40;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-400 dark:bg-slate-500;
+    @apply bg-[#D97D29]/70;
   }
 }
+

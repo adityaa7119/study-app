@@ -78,16 +78,26 @@ export function getGreeting(): string {
 }
 
 export const MOTIVATIONAL_QUOTES = [
-  "Every expert was once a beginner. Keep going!",
-  "The secret of getting ahead is getting started.",
+  "Small steps, big results. ♡",
+  "Today: Study. Practice. Be better. Keep going. ♡",
+  "Good things take time. ♡",
+  "You can do it. ♡",
+  "Focus. Learn. Grow. ♡",
+  "Better days ahead. :)",
+  "Understand concepts, build cool projects, make your future self proud. ♡",
   "Success is the sum of small efforts repeated day in, day out.",
+  "The secret of getting ahead is getting started.",
   "Don't watch the clock; do what it does. Keep going.",
-  "The harder you work, the luckier you get.",
-  "Focus on the journey, not the destination.",
-  "A little progress each day adds up to big results.",
-  "Believe you can and you're halfway there.",
-  "Push yourself because no one else is going to do it for you.",
-  "Great things never come from comfort zones.",
+  "Consistency beats intensity every single time.",
+  "A little progress each day adds up to big rank-defining results.",
+  "Discipline is choosing between what you want now and what you want most.",
+  "Your only limit is the courage you bring to the study desk today.",
+  "Small daily focus sessions compound into massive breakthroughs.",
+  "Stay patient and trust your preparation. Mastery takes deliberate practice.",
+  "Every expert was once a beginner who refused to surrender.",
+  "Difficult concepts today will become your easiest scoring areas tomorrow.",
+  "The pain of discipline is far less than the pain of regret.",
+  "Focus on depth over speed. Understanding beats memorization.",
 ];
 
 export function getRandomQuote(): string {

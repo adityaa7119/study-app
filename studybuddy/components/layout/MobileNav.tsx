@@ -18,7 +18,7 @@ export default function MobileNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex border-t border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+    <nav className="flex border-t border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)]">
       {items.map((item) => {
         const isActive = pathname === item.href;
         return (
@@ -28,12 +28,12 @@ export default function MobileNav() {
             className={cn(
               "flex flex-1 flex-col items-center gap-1 py-3 text-xs font-medium transition-colors",
               isActive
-                ? "text-indigo-600 dark:text-indigo-400"
-                : "text-slate-500 dark:text-slate-500"
+                ? "text-[#D97D29] font-semibold dark:text-[#E3A354]"
+                : "text-[var(--text-secondary)] hover:text-[#D97D29]"
             )}
           >
             <item.icon className="h-5 w-5" />
-            {item.label}
+            <span className="text-[11px]">{item.label}</span>
           </Link>
         );
       })}

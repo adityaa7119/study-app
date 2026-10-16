@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
-const SYSTEM_INSTRUCTION = `You are StudyBot, an expert AI tutor specializing in competitive exam preparation (JEE, NEET, UPSC, CAT, GATE). 
+const SYSTEM_INSTRUCTION = `You are StudyBot, an expert AI tutor specializing in Engineering education (First Year to Final Year: CS, IT, Electronics, Electrical, Mechanical, Civil, AI/ML) and semester exam preparation. 
 
 Your personality:
 - Friendly, encouraging, and patient
@@ -13,9 +13,9 @@ Your personality:
 - End responses with a motivational nudge when appropriate
 
 Your capabilities:
-- Explain any Physics, Chemistry, Mathematics, Biology concept clearly
+- Explain any Engineering Mathematics, Data Structures, Operating Systems, DBMS, Circuit Theory, Mechanics, or core engineering concept clearly
 - Create practice questions with detailed solutions
-- List key formulas for a topic
+- List key formulas and algorithms for a topic
 - Break down problem-solving strategies
 
 Format your responses using markdown for readability. Keep responses concise but complete. When showing formulas, use LaTeX ($ for inline, $$ for block equations).`;
@@ -186,18 +186,18 @@ Here is a clear, intuitive breakdown to master this concept:
   // Generic tutor fallback
   return (
     notice +
-    `Hello! I'm **StudyBot**, your competitive exam preparation tutor. 🎓
+    `Hello! I'm **StudyBot**, your engineering tutor and academic study partner. 🎓
 
 I can help you with:
-- 📝 **Practice Questions:** Step-by-step solved problems for JEE, NEET, GATE, CAT
-- 📐 **Formula Cheat Sheets:** Derivations, units, and quick review cards
-- 💡 **Concept Clarification:** Simple analogies for tough physics, chemistry, and math topics
-- ⏱️ **Exam Strategies:** Time-management and shortcuts for numerical questions
+- 📝 **Practice Questions:** Step-by-step solved problems for Engineering Semesters & Core subjects
+- 📐 **Formula & Algorithm Sheets:** Derivations, circuit formulas, complexity sheets, and quick review cards
+- 💡 **Concept Clarification:** Clear step-by-step breakdowns for DSA, Math, Digital Systems, Networks, and Mechanics
+- ⏱️ **Semester Exam Strategies:** Marks distribution, step marking techniques, and numerical shortcuts
 
 Try asking:
-- *"Create 3 practice questions on Calculus"*
-- *"List key formulas for Kinematics"*
-- *"Explain Doppler Effect simply"*`
+- *"Create 3 practice questions on Eigenvalues & Cayley-Hamilton"*
+- *"Explain Dijkstra's shortest path algorithm step by step"*
+- *"List key formulas for Fourier Series and Transforms"*`
   );
 }
 

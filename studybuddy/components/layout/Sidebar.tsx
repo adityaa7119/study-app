@@ -15,6 +15,7 @@ import {
   GraduationCap,
   LogOut,
   Coins,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/lib/store/useAppStore";
@@ -30,7 +31,11 @@ const navItems = [
   { href: "/settings", label: "Settings", icon: Settings },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  onClose?: () => void;
+}
+
+export default function Sidebar({ onClose }: SidebarProps) {
   const pathname = usePathname();
   const { profile, openBot } = useAppStore();
   const router = useRouter();
@@ -42,36 +47,36 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="flex h-full w-64 flex-col border-r border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900">
+    <aside className="flex h-full w-64 flex-col border-r border-white/10 bg-black/30 backdrop-blur-3xl text-white transition-all select-none">
       {/* Logo */}
-      <div className="flex items-center gap-3 border-b border-slate-200 p-5 dark:border-slate-700">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500">
-          <GraduationCap className="h-5 w-5 text-white" />
+      <div className="flex items-center gap-3 border-b border-white/10 p-5">
+        <div className="apple-glass-icon flex h-11 w-11 items-center justify-center text-white shadow-lg shadow-[#D97D29]/25">
+          <GraduationCap className="h-5 w-5 text-[#E3A354]" />
         </div>
         <div>
-          <div className="font-bold text-slate-900 dark:text-white">StudyBuddy</div>
-          <div className="text-xs text-slate-500 dark:text-slate-400">
-            {profile?.target_exam ?? "Exam Prep"}
+          <div className="font-bold text-white tracking-tight font-poppins">StudyBuddy</div>
+          <div className="text-xs text-[#E8D6C4] font-medium">
+            {profile?.target_exam === "JEE" ? "First Year (FE)" : (profile?.target_exam ?? "First Year (FE)")}
           </div>
         </div>
       </div>
 
       {/* Credits wallet */}
       {profile && (
-        <div className="mx-3 mt-3 flex items-center gap-2 rounded-xl bg-amber-50 px-3 py-2.5 dark:bg-amber-500/10">
-          <Coins className="h-4 w-4 text-amber-500" />
-          <span className="text-sm font-semibold text-amber-700 dark:text-amber-400">
+        <div className="mx-3 mt-3 flex items-center gap-2 rounded-2xl bg-white/10 border border-white/15 px-3 py-2.5 backdrop-blur-xl shadow-sm">
+          <Coins className="h-4 w-4 text-[#E3A354]" />
+          <span className="text-xs font-semibold text-[#FDF5EC]">
             {profile.credit_points.toLocaleString()} credits
           </span>
         </div>
       )}
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 overflow-y-auto p-3">
+      <nav className="flex-1 space-y-1.5 overflow-y-auto p-3">
         {navItems.map((item) => {
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           return (
-            <Link key={item.href} href={item.href}>
+            <Link key={item.href} href={item.href} onClick={onClose}>
               <motion.div
                 whileTap={{ scale: 0.97 }}
                 className={cn(
@@ -79,12 +84,12 @@ export default function Sidebar() {
                   isActive && "active"
                 )}
               >
-                <item.icon className="h-4 w-4 shrink-0" />
-                {item.label}
+                <item.icon className={cn("h-4 w-4 shrink-0", isActive ? "text-[#D97D29] dark:text-[#E3A354]" : "text-[var(--text-secondary)]")} />
+                <span>{item.label}</span>
                 {isActive && (
                   <motion.div
                     layoutId="activeNav"
-                    className="ml-auto h-1.5 w-1.5 rounded-full bg-indigo-500"
+                    className="ml-auto h-2 w-2 rounded-full bg-[#D97D29] dark:bg-[#E3A354]"
                   />
                 )}
               </motion.div>
@@ -94,31 +99,34 @@ export default function Sidebar() {
 
         {/* AI Tutor */}
         <button
-          onClick={openBot}
+          onClick={() => {
+            if (onClose) onClose();
+            openBot();
+          }}
           className="nav-link w-full text-left"
         >
-          <Bot className="h-4 w-4 shrink-0 text-indigo-500" />
+          <Bot className="h-4 w-4 shrink-0 text-[#E3A354]" />
           <span>StudyBot AI</span>
-          <span className="ml-auto rounded-full bg-indigo-100 px-1.5 py-0.5 text-[10px] font-semibold text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400">
-            AI
+          <span className="ml-auto rounded-full bg-[#E3A354]/20 px-2 py-0.5 text-[10px] font-bold text-[#D97D29] dark:bg-[#D97D29]/30 dark:text-[#E3A354]">
+            AI Tutor
           </span>
         </button>
       </nav>
 
       {/* User profile footer */}
-      <div className="border-t border-slate-200 p-3 dark:border-slate-700">
+      <div className="border-t border-white/10 p-3">
         {profile && (
-          <div className="mb-2 flex items-center gap-3 rounded-xl px-3 py-2">
+          <div className="mb-2 flex items-center gap-3 rounded-2xl p-2.5 bg-white/10 border border-white/15 backdrop-blur-xl">
             <img
-              src={`https://api.dicebear.com/7.x/initials/svg?seed=${profile.avatar_seed}&backgroundColor=6366f1&textColor=fff`}
+              src={`https://api.dicebear.com/7.x/initials/svg?seed=${profile.avatar_seed}&backgroundColor=D97D29&textColor=fff`}
               alt="avatar"
-              className="h-8 w-8 rounded-full"
+              className="h-8 w-8 rounded-full border border-white/30"
             />
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-semibold text-slate-800 dark:text-slate-100">
+              <div className="truncate text-xs font-semibold text-white">
                 {profile.full_name}
               </div>
-              <div className="truncate text-xs text-slate-500 dark:text-slate-400">
+              <div className="truncate text-[11px] text-[#E8D6C4]/80">
                 {profile.email}
               </div>
             </div>
@@ -126,7 +134,7 @@ export default function Sidebar() {
         )}
         <button
           onClick={handleSignOut}
-          className="nav-link w-full text-left text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-500/10"
+          className="flex items-center gap-2 rounded-2xl px-3.5 py-2 text-xs font-semibold w-full text-left text-red-400 hover:bg-red-500/20 hover:text-red-300 backdrop-blur-sm transition-all"
         >
           <LogOut className="h-4 w-4" />
           Sign Out
