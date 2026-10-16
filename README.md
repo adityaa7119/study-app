@@ -1,6 +1,6 @@
 # StudyBuddy — Engineering Study & Career Companion 🚀
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/adityaa7119/study-app&root-directory=studybuddy&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/adityaa7119/study-app&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY)
 
 A modern, production-grade Next.js study and career acceleration platform built for engineering students (FE to BE).
 
@@ -10,7 +10,7 @@ A modern, production-grade Next.js study and career acceleration platform built 
 
 Click the button above or follow these 3 quick steps:
 
-1. Click **[Deploy with Vercel](https://vercel.com/new/clone?repository-url=https://github.com/adityaa7119/study-app&root-directory=studybuddy&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY)**.
+1. Click **[Deploy with Vercel](https://vercel.com/new/clone?repository-url=https://github.com/adityaa7119/study-app&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY)**.
 2. Sign in with your GitHub account (`adityaa7119`).
 3. Fill in the required environment variables:
    - `NEXT_PUBLIC_SUPABASE_URL`: `https://ykqmnnztmpfvnalguuhv.supabase.co`
